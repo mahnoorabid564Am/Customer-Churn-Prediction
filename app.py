@@ -1,11 +1,11 @@
 import streamlit as st
 from auth import login_user,register_user
-
+#making the seesion condition
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 if "user_id" not in st.session_state:
     st.session_state["user_id"] = None 
-
+# on login this condition becomes true and user is moved to main page
 if st.session_state["logged_in"]:
     st.title("Dashboard")  
     st.title("Welcome to Customer Churn Analytics")
@@ -20,7 +20,7 @@ if st.session_state["logged_in"]:
         st.session_state["logged_in"]=False
         st.session_state["user_id"]=None  
         st.rerun() 
-
+# if user is logged out he'll be moved to login or registration page
 else:
     st.title("Customer Churn Prediction")
     choice = st.radio("Select an option", ["Login", "Sign Up"])
