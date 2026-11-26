@@ -20,7 +20,7 @@ if st.session_state["logged_in"]:
         st.session_state["logged_in"]=False
         st.session_state["user_id"]=None  
         st.rerun() 
-# if user is logged out he'll be moved to login or registration page
+# if user is logged out he'll be moved to login or registration
 else:
     st.title("Customer Churn Prediction")
     choice = st.radio("Select an option", ["Login", "Sign Up"])
@@ -35,7 +35,7 @@ else:
                 st.session_state["logged_in"]=True
                 st.session_state["user_id"]=user_id
                 st.success("sucessful login")
-                st.rerun()
+                st.switch_page("pages/Dashboard.py")
             else:
                 st.error("Invalid email or password.")  
     else:
@@ -45,8 +45,11 @@ else:
         reg_pass=st.text_input("Enter your password: ",type="password")
         reg_button = st.button("Create Account")
         if reg_button:
-            result = register_user(reg_name,reg_email,reg_pass)
-            if result:
-                st.success("Account created successfully!")
+            user_id = register_user(reg_name, reg_email, reg_pass)
+            if user_id:
+                st.session_state["logged_in"] = True
+                st.session_state["user_id"] = user_id
+                st.success("Registration successful!")
+                st.switch_page("pages/Dashboard.py")
             else:
-             st.error("Email already registered!")
+                st.error("Email already registered!")

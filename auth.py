@@ -3,6 +3,7 @@ import sqlite3
 import bcrypt
 # creating a function for registring user
 def register_user(name,email,password):
+    user_id = None
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
 
@@ -24,9 +25,10 @@ def register_user(name,email,password):
             "INSERT INTO users(name,email,password_hash) VALUES(?,?,?)",
             (name,email,hashed_pass.decode("utf-8"))
         ) 
+        user_id = cursor.lastrowid
         connection.commit()
     connection.close() 
-    return True
+    return user_id
 # login function 
 def login_user(email, password):
     user_id = None
